@@ -9,21 +9,21 @@ const rename = async () => {
     const wrongFilename = path.join(srcDir, 'wrongFilename.txt');
     const properFilename = path.join(srcDir, 'properFilename.md');
 
-    try {
-        try {
-            await fs.stat(wrongFilename);
-        } catch {
-            throw new Error('FS operation failed');
-        }
+    const exist = async (fName) => {
+      try {
+        await fs.stat(fName);
+        return true;
+      } catch {
+        return false;
+      }
+    }
 
-        try {
-            await fs.stat(properFilename);
-            throw new Error('FS operation failed');
-        } catch {
-        }
+    try {
+        const existMd = await exist(properFilename);
+        if (existMd) throw new Error('properFilename.md already exists')
         await fs.rename(wrongFilename, properFilename);
     } catch (error) {
-        console.error(error.message);
+      throw new Error('FS operation failed');
     }
 };
 

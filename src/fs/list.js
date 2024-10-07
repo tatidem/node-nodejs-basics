@@ -8,16 +8,10 @@ const list = async () => {
     const srcDir = path.join(__dirname, 'files');
 
     try {
-        try {
-            await fs.stat(srcDir);
-        } catch {
-            throw new Error('FS operation failed');
-        }
-
         const files = await fs.readdir(srcDir);
         console.log('List of files:', files);
     } catch (error) {
-        console.error(error.message);
+        throw new Error('FS operation failed');
     }
 };
 

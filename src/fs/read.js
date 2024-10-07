@@ -9,15 +9,10 @@ const read = async () => {
     const fileToRead = path.join(srcDir, 'fileToRead.txt');
 
     try {
-        try {
-            await fs.stat(fileToRead);
-        } catch {
-            throw new Error('FS operation failed');
-        }
         const content = await fs.readFile(fileToRead, 'utf8');
         console.log(content);
     } catch (error) {
-        console.error(error.message);
+        throw new Error('FS operation failed');
     }
 };
 

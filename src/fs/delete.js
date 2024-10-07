@@ -9,16 +9,10 @@ const remove = async () => {
     const fileToRemove = path.join(srcDir, 'fileToRemove.txt');
 
     try {
-        try {
-            await fs.stat(fileToRemove);
-        } catch {
-            throw new Error('FS operation failed');
-        }
-
         await fs.unlink(fileToRemove);
         console.log(`File removed ${fileToRemove}`);
     } catch (error) {
-        console.error(error.message);
+        throw new Error('FS operation failed');
     }
 };
 
